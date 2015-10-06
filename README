@@ -1,0 +1,22 @@
+WIND SPEED AND DIRECTION SYSTEM
+
+This is the code development directory structure for the Wind Speed and Direction display.
+
+The directory structure is make up of four subdirectories:
+
+wsd_sensor - the code for the sensor devices.
+wsd_gallery - the code for the gallery devices.
+include - include files common to both the sensor and the gallery code.
+lib - library functions used by the sensor and/or the gallery code.
+
+There are also Makefiles in both the wsd_sensor and wsd_gallery directories.  They are used
+to build the code and flash the devices.  See the comments at the beginning of each file for
+information on how to use them.
+
+I hope all this works.  Let me know if you find a problem.
+
+Dave
+
+
+
+     
