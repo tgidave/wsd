@@ -1,1 +1,2 @@
-wsd_sensor/wsd_sensor.bin
+#ignore all .bin files
+*.bin
