@@ -27,12 +27,12 @@ int arrayIndex = ARRAY_SIZE;
 
 short dmaRing[DMA_RING_SIZE];
   
-int dmarIndex;  
+int dmaRingIndex;  
 
 Servo myservo0; // create servo object to control a servo 0
 Servo myservo1; // create servo object to control a servo 1
 
-int incrementMarIndex(int indexIn) {
+int incrementDmaRingIndex(int indexIn) {
 
   indexIn++;
 
@@ -46,16 +46,16 @@ int incrementMarIndex(int indexIn) {
 short calcDirMovingAverage(short dataIn) {
 
   int i;
-  int dmarTotal = 0;
+  int dmaRingTotal = 0;
 
-  dmaRing[dmarIndex] = dataIn;
+  dmaRing[dmaRingIndex] = dataIn;
 
-  for (i = incrementMarIndex(dmarIndex);i != dmarIndex; i = incrementMarIndex(i)) {
-    dmarTotal += dmaRing[i];
+  for (i = incrementDmaRingIndex(dmaRingIndex);i != dmaRingIndex; i = incrementDmaRingIndex(i)) {
+    dmaRingTotal += dmaRing[i];
   }
 
-  dmarIndex = incrementMarIndex(dmarIndex);
-  return((short)(dmarTotal / DMA_RING_SIZE));
+  dmaRingIndex = incrementDmaRingIndex(dmaRingIndex);
+  return((short)(dmaRingTotal / DMA_RING_SIZE));
 }
 
 //*****************************************************************************
@@ -122,7 +122,7 @@ void setup() {
 
   int i;
 
-  Spark.subscribe("speedDirection", speedrProcess, SENSOR_NBR);
+  Particle.subscribe(SENSOR_NBR, speedrProcess);
 
   // begin light event setup here:
   pinMode(ledPin1, OUTPUT);
@@ -135,7 +135,7 @@ void setup() {
     dmaRing[i] = 0;
   }
 
-  dmarIndex = 0;
+  dmaRingIndex = 0;
 }
 
 //***************************************************************************** 

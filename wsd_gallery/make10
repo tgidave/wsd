@@ -54,127 +54,127 @@ clean:
 	rm -fr wsd_gallery_*.bin 
 
 #wsd_gallery_TG00.bin: wsd_gallery.ino wsd_sensor_TS00.h $(INCLUDES)
-#	cp wsd_sensor_TS00.h wsd_sensor.h
+#	cp ../include/wsd_sensor_TS00.h wsd_sensor.h
 #	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G00.bin: wsd_gallery.ino wsd_sensor_S00.h $(INCLUDES)
-	cp wsd_sensor_S00.h wsd_sensor.h
+wsd_gallery_G00.bin: wsd_gallery.ino ../include/wsd_sensor_S00.h $(INCLUDES)
+	cp ../include/wsd_sensor_S00.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G01.bin: wsd_gallery.ino wsd_sensor_S11.h $(INCLUDES)
-	cp wsd_sensor_S11.h wsd_sensor.h
+wsd_gallery_G01.bin: wsd_gallery.ino ../include/wsd_sensor_S11.h $(INCLUDES)
+	cp ../include/wsd_sensor_S11.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G02.bin: wsd_gallery.ino wsd_sensor_S12.h $(INCLUDES)
-	cp wsd_sensor_S12.h wsd_sensor.h
+wsd_gallery_G02.bin: wsd_gallery.ino ../include/wsd_sensor_S12.h $(INCLUDES)
+	cp ../include/wsd_sensor_S12.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G03.bin: wsd_gallery.ino wsd_sensor_S13.h $(INCLUDES)
-	cp wsd_sensor_S13.h wsd_sensor.h
+wsd_gallery_G03.bin: wsd_gallery.ino ../include/wsd_sensor_S13.h $(INCLUDES)
+	cp ../include/wsd_sensor_S13.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G04.bin: wsd_gallery.ino wsd_sensor_S14.h $(INCLUDES)
-	cp wsd_sensor_S14.h wsd_sensor.h
+wsd_gallery_G04.bin: wsd_gallery.ino ../include/wsd_sensor_S14.h $(INCLUDES)
+	cp ../include/wsd_sensor_S14.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G05.bin: wsd_gallery.ino wsd_sensor_S15.h $(INCLUDES)
-	cp wsd_sensor_S15.h wsd_sensor.h
+wsd_gallery_G05.bin: wsd_gallery.ino ../include/wsd_sensor_S15.h $(INCLUDES)
+	cp ../include/wsd_sensor_S15.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G06.bin: wsd_gallery.ino wsd_sensor_S16.h $(INCLUDES)
-	cp wsd_sensor_S16.h wsd_sensor.h
+wsd_gallery_G06.bin: wsd_gallery.ino ../include/wsd_sensor_S16.h $(INCLUDES)
+	cp ../include/wsd_sensor_S16.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G07.bin: wsd_gallery.ino wsd_sensor_S17.h $(INCLUDES)
-	cp wsd_sensor_S17.h wsd_sensor.h
+wsd_gallery_G07.bin: wsd_gallery.ino ../include/wsd_sensor_S17.h $(INCLUDES)
+	cp ../include/wsd_sensor_S17.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G08.bin: wsd_gallery.ino wsd_sensor_S18.h $(INCLUDES)
-	cp wsd_sensor_S18.h wsd_sensor.h
+wsd_gallery_G08.bin: wsd_gallery.ino ../include/wsd_sensor_S18.h $(INCLUDES)
+	cp ../include/wsd_sensor_S18.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G09.bin: wsd_gallery.ino wsd_sensor_S19.h $(INCLUDES)
-	cp wsd_sensor_S19.h wsd_sensor.h
+wsd_gallery_G09.bin: wsd_gallery.ino ../include/wsd_sensor_S19.h $(INCLUDES)
+	cp ../include/wsd_sensor_S19.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G10.bin: wsd_gallery.ino wsd_sensor_S00.h $(INCLUDES)
-	cp wsd_sensor_S00.h wsd_sensor.h
+wsd_gallery_G10.bin: wsd_gallery.ino ../include/wsd_sensor_S00.h $(INCLUDES)
+	cp ../include/wsd_sensor_S00.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G11.bin: wsd_gallery.ino wsd_sensor_S11.h $(INCLUDES)
-	cp wsd_sensor_S11.h wsd_sensor.h
+wsd_gallery_G11.bin: wsd_gallery.ino ../include/wsd_sensor_S11.h $(INCLUDES)
+	cp ../include/wsd_sensor_S11.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G12.bin: wsd_gallery.ino wsd_sensor_S12.h $(INCLUDES)
-	cp wsd_sensor_S12.h wsd_sensor.h
+wsd_gallery_G12.bin: wsd_gallery.ino ../include/wsd_sensor_S12.h $(INCLUDES)
+	cp ../include/wsd_sensor_S12.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G13.bin: wsd_gallery.ino wsd_sensor_S13.h $(INCLUDES)
-	cp wsd_sensor_S13.h wsd_sensor.h
+wsd_gallery_G13.bin: wsd_gallery.ino ../include/wsd_sensor_S13.h $(INCLUDES)
+	cp ../include/wsd_sensor_S13.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G14.bin: wsd_gallery.ino wsd_sensor_S14.h $(INCLUDES)
-	cp wsd_sensor_S14.h wsd_sensor.h
+wsd_gallery_G14.bin: wsd_gallery.ino ../include/wsd_sensor_S14.h $(INCLUDES)
+	cp ../include/wsd_sensor_S14.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G15.bin: wsd_gallery.ino wsd_sensor_S15.h $(INCLUDES)
-	cp wsd_sensor_S15.h wsd_sensor.h
+wsd_gallery_G15.bin: wsd_gallery.ino ../include/wsd_sensor_S15.h $(INCLUDES)
+	cp ../include/wsd_sensor_S15.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G16.bin: wsd_gallery.ino wsd_sensor_S16.h $(INCLUDES)
-	cp wsd_sensor_S16.h wsd_sensor.h
+wsd_gallery_G16.bin: wsd_gallery.ino ../include/wsd_sensor_S16.h $(INCLUDES)
+	cp ../include/wsd_sensor_S16.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G17.bin: wsd_gallery.ino wsd_sensor_S17.h $(INCLUDES)
-	cp wsd_sensor_S17.h wsd_sensor.h
+wsd_gallery_G17.bin: wsd_gallery.ino ../include/wsd_sensor_S17.h $(INCLUDES)
+	cp ../include/wsd_sensor_S17.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G18.bin: wsd_gallery.ino wsd_sensor_S18.h $(INCLUDES)
-	cp wsd_sensor_S18.h wsd_sensor.h
+wsd_gallery_G18.bin: wsd_gallery.ino ../include/wsd_sensor_S18.h $(INCLUDES)
+	cp ../include/wsd_sensor_S18.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G19.bin: wsd_gallery.ino wsd_sensor_S19.h $(INCLUDES)
-	cp wsd_sensor_S19.h wsd_sensor.h
+wsd_gallery_G19.bin: wsd_gallery.ino ../include/wsd_sensor_S19.h $(INCLUDES)
+	cp ../include/wsd_sensor_S19.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G20.bin: wsd_gallery.ino wsd_sensor_S00.h $(INCLUDES)
-	cp wsd_sensor_S00.h wsd_sensor.h
+wsd_gallery_G20.bin: wsd_gallery.ino ../include/wsd_sensor_S00.h $(INCLUDES)
+	cp ../include/wsd_sensor_S00.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G21.bin: wsd_gallery.ino wsd_sensor_S11.h $(INCLUDES)
-	cp wsd_sensor_S11.h wsd_sensor.h
+wsd_gallery_G21.bin: wsd_gallery.ino ../include/wsd_sensor_S11.h $(INCLUDES)
+	cp ../include/wsd_sensor_S11.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G22.bin: wsd_gallery.ino wsd_sensor_S12.h $(INCLUDES)
-	cp wsd_sensor_S12.h wsd_sensor.h
+wsd_gallery_G22.bin: wsd_gallery.ino ../include/wsd_sensor_S12.h $(INCLUDES)
+	cp ../include/wsd_sensor_S12.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G23.bin: wsd_gallery.ino wsd_sensor_S13.h $(INCLUDES)
-	cp wsd_sensor_S13.h wsd_sensor.h
+wsd_gallery_G23.bin: wsd_gallery.ino ../include/wsd_sensor_S13.h $(INCLUDES)
+	cp ../include/wsd_sensor_S13.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G24.bin: wsd_gallery.ino wsd_sensor_S14.h $(INCLUDES)
-	cp wsd_sensor_S14.h wsd_sensor.h
+wsd_gallery_G24.bin: wsd_gallery.ino ../include/wsd_sensor_S14.h $(INCLUDES)
+	cp ../include/wsd_sensor_S14.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G25.bin: wsd_gallery.ino wsd_sensor_S15.h $(INCLUDES)
-	cp wsd_sensor_S15.h wsd_sensor.h
+wsd_gallery_G25.bin: wsd_gallery.ino ../include/wsd_sensor_S15.h $(INCLUDES)
+	cp ../include/wsd_sensor_S15.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G26.bin: wsd_gallery.ino wsd_sensor_S16.h $(INCLUDES)
-	cp wsd_sensor_S16.h wsd_sensor.h
+wsd_gallery_G26.bin: wsd_gallery.ino ../include/wsd_sensor_S16.h $(INCLUDES)
+	cp ../include/wsd_sensor_S16.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G27.bin: wsd_gallery.ino wsd_sensor_S17.h $(INCLUDES)
-	cp wsd_sensor_S17.h wsd_sensor.h
+wsd_gallery_G27.bin: wsd_gallery.ino ../include/wsd_sensor_S17.h $(INCLUDES)
+	cp ../include/wsd_sensor_S17.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G28.bin: wsd_gallery.ino wsd_sensor_S18.h $(INCLUDES)
-	cp wsd_sensor_S18.h wsd_sensor.h
+wsd_gallery_G28.bin: wsd_gallery.ino ../include/wsd_sensor_S18.h $(INCLUDES)
+	cp ../include/wsd_sensor_S18.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
  
-wsd_gallery_G29.bin: wsd_gallery.ino wsd_sensor_S19.h $(INCLUDES)
-	cp wsd_sensor_S19.h wsd_sensor.h
+wsd_gallery_G29.bin: wsd_gallery.ino ../include/wsd_sensor_S19.h $(INCLUDES)
+	cp ../include/wsd_sensor_S19.h wsd_sensor.h
 	particle compile p $< wsd_sensor.h $(INCLUDES) --saveto $@
 
 #flash: flashtg00 
