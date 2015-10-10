@@ -25,6 +25,8 @@
 #endif
 
 #include "wsd_defines.h"          // Defines common to all programs.
+#include "wsd_sensor.h"           // Define for sensor device ID
+//#include "wind_sensor.h"
 
 const int OutPin = A0;            // wind sensor analog pin  hooked up to Wind P sensor "OUT" pin
 const int TempPin = A2;           // temp sesnsor analog pin hooked up to Wind P sensor "TMP" pin
@@ -190,7 +192,7 @@ short getWindHeading( void ) {
 // values are formated as pairs, IE ws1,wd1,ws2,wd2, ...
 // 
 // After the data is formatted it is sent to the subscribed device using the
-// Spark.publish class.
+// Particle.publish class.
 // 
 //*****************************************************************************
 
@@ -220,8 +222,8 @@ void formatAndPublishData(void) {
 #endif
 
   // initiate cloud function to publish the wind MPH as ascii
-  //Spark.publish("wind01pub", buffSpeed);
-  Spark.publish("speedDirection", transBuff);
+  //Particle.publish("wind01pub", buffSpeed);
+  Particle.publish(SENSOR_NBR, transBuff);
 }
 
 
