@@ -16,6 +16,10 @@
 #include "wsd_defines.h"
 #include "wsd_sensor.h"
 
+#define SERVO_UPDATE_LIMIT -1 // If the wind speed is equal to or less than this
+                              // value the servo direction is not updated.  A value 
+                              // of -1 should always update the servo direction.
+
 const int ledPin1 =  A5;
 const int ledPin2 =  A4; // the number of the LED pin driver
 
@@ -29,8 +33,8 @@ short dmaRing[DMA_RING_SIZE];
   
 int dmaRingIndex;  
 
-Servo myservo0; // create servo object to control a servo 0
-Servo myservo1; // create servo object to control a servo 1
+Servo myservo0; // create servo object to control servo 0
+Servo myservo1; // create servo object to control servo 1
 
 int incrementDmaRingIndex(int indexIn) {
 
@@ -164,13 +168,18 @@ void loop() {
   short directionMap0;
   short directionMap1;
 
+  int delayTime = mSECOND_DELAY;
+
   if (arrayIndex < ARRAY_SIZE) {
 
     speedMap = map(windSpeed[arrayIndex], 0, 50, 0, 255);
     direction = calcDirMovingAverage(compassHeading[arrayIndex]); 
 
+    if (speedMap > SERVO_UPDATE_LIMIT) {  // If the wind speed is above the servo
+                                          // update limit, update the servo direction.
+      delayTime -= 50;    // we know we are going to delay 50ms so adjust for it.
 
-    if (direction >= 0 && direction <= 90) {
+      if (direction >= 0 && direction <= 90) {
       analogWrite(ledPin2, 0);
       directionMap0 = map(direction, 0, 180, 0, 170);
       myservo0.write(directionMap0);
@@ -204,11 +213,20 @@ void loop() {
       delay(50);
       analogWrite(ledPin2, speedMap);
       myservo0.write(0);
+      }
+    }
+
+    else {  // The wind speed is below the SERVO_UPDATE_LIMIT.  Just set the light brightness.
+            // Since we don't know which LED was on last and the wind speed is very low just go 
+            // ahead and set both LEDs to the current value.  This is important only when the LED 
+            // was set very bright during the last loop.
+      analogWrite(ledPin1, speedMap);  
+      analogWrite(ledPin2, speedMap);
     }
 
     arrayIndex += 1;
   }
 
-  delay( mSECOND_DELAY - 50);
+  delay(delayTime);
 }
 
