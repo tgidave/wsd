@@ -11,6 +11,9 @@
 //
 //*****************************************************************************
 
+#define CHECK_CONNECTED // Comment this out to remove code that checkes that 
+                        // the device is connected and reconnects if not.
+
 #include <stdio.h>
 
 // beign digital compass code here
@@ -244,6 +247,12 @@ void formatAndPublishData(void) {
 
 void loop(void) {
   //begin Rev C wind sensor declarations here:
+
+#ifdef CHECK_CONNECTED
+  if (!Particle.connected()) {
+      Particle.connect();
+  }
+#endif
 
   windSpeed[arrayIndex] = getWindSpeed();
   compassHeading[arrayIndex] = getWindHeading();
