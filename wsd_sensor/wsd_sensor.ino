@@ -14,6 +14,8 @@
 #define CHECK_CONNECTED // Comment this out to remove code that checkes that 
                         // the device is connected and reconnects if not.
 
+#define USE_STATIC_IP_ADDRESSES // Comment this out to use dynamic ip addresses.
+
 #include <stdio.h>
 
 // beign digital compass code here
@@ -60,6 +62,8 @@ Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(12345);
 
 void setup(void) {
 
+#ifdef USE_STATIC_IP_ADDRESSES
+
   // set up a static IP address.
   IPAddress myAddress(IP_ADDRESS);
   IPAddress netmask(NETMASK);
@@ -69,6 +73,8 @@ void setup(void) {
 
     // now let's use the configured IP
   WiFi.useStaticIP();
+
+  #endif
 
   // digital compass setup here - no additional setup commands for Rev P wind sensor:
   Serial.begin(9600);
