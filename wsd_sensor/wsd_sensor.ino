@@ -59,6 +59,17 @@ Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(12345);
 //*****************************************************************************
 
 void setup(void) {
+
+  // set up a static IP address.
+  IPAddress myAddress(IP_ADDRESS);
+  IPAddress netmask(NETMASK);
+  IPAddress gateway(GATEWAY);
+  IPAddress dns(DNS_SERVER);
+  WiFi.setStaticIP(myAddress, netmask, gateway, dns);
+
+    // now let's use the configured IP
+  WiFi.useStaticIP();
+
   // digital compass setup here - no additional setup commands for Rev P wind sensor:
   Serial.begin(9600);
 

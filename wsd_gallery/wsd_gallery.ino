@@ -177,13 +177,13 @@ void loop() {
 
     if (speedMap > SERVO_UPDATE_LIMIT) {  // If the wind speed is above the servo
                                           // update limit, update the servo direction.
-      delayTime -= 50;    // we know we are going to delay 50ms so adjust for it.
+      delayTime -= SERVO_DELAY;    // we know we are going to delay 50ms so adjust for it.
 
       if (direction >= 0 && direction <= 90) {
       analogWrite(ledPin2, 0);
       directionMap0 = map(direction, 0, 180, 0, 170);
       myservo0.write(directionMap0);
-      delay(50);
+      delay(SERVO_DELAY);
       analogWrite(ledPin1, speedMap);
       myservo1.write(170);
     }
@@ -192,7 +192,7 @@ void loop() {
       analogWrite(ledPin2, 0);
       directionMap0 = map(direction, 0, 180, 0, 170);
       myservo0.write(directionMap0);
-      delay(50);
+      delay(SERVO_DELAY);
       analogWrite(ledPin1, speedMap);
       myservo1.write(0);
     }
@@ -201,7 +201,7 @@ void loop() {
       analogWrite(ledPin1, 0);
       directionMap1 = map(direction, 181, 360, 0, 170);
       myservo1.write(directionMap1);
-      delay(50);
+      delay(SERVO_DELAY);
       analogWrite(ledPin2, speedMap);
       myservo0.write(170);
     }
@@ -210,7 +210,7 @@ void loop() {
       analogWrite(ledPin1, 0);
       directionMap1 = map(direction, 181, 360, 0, 170);
       myservo1.write(directionMap1);
-      delay(50);
+      delay(SERVO_DELAY);
       analogWrite(ledPin2, speedMap);
       myservo0.write(0);
       }
