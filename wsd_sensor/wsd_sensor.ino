@@ -11,10 +11,17 @@
 //
 //*****************************************************************************
 
+//*****************************************************************************
+// These defines add or remove code at compile time.  Be sure that if you 
+// change any of them, you compile and flash all servo devices.
+//*****************************************************************************
+
 #define CHECK_CONNECTED // Comment this out to remove code that checkes that 
                         // the device is connected and reconnects if not.
 
-#define USE_STATIC_IP_ADDRESSES // Comment this out to use dynamic ip addresses.
+#define USE_STATIC_IP_ADDRESSES // Comment this out to use dynamic IP addresses.
+                                
+//******************************************************************************
 
 #include <stdio.h>
 
@@ -74,7 +81,7 @@ void setup(void) {
     // now let's use the configured IP
   WiFi.useStaticIP();
 
-  #endif
+#endif
 
   // digital compass setup here - no additional setup commands for Rev P wind sensor:
   Serial.begin(9600);
