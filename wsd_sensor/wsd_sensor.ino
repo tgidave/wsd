@@ -81,6 +81,10 @@ void setup(void) {
     // now let's use the configured IP
   WiFi.useStaticIP();
 
+#else
+
+  WiFi.useDynamicIP();
+
 #endif
 
   // digital compass setup here - no additional setup commands for Rev P wind sensor:
