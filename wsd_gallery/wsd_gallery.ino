@@ -13,6 +13,11 @@
 //
 //*****************************************************************************
 
+// Uncomment the next line if you want the gallery devices to replay old data when
+// they have processed all current data and no new data has arrived.
+
+//#define REPLAY_OLD_DATA
+
 #include "wsd_defines.h"
 #include "wsd_sensor.h"
 
@@ -169,6 +174,14 @@ void loop() {
   short directionMap1;
 
   int delayTime = mSECOND_DELAY;
+
+#ifdef REPLAY_OLD_DATA
+// If REPLAY_OLD_DATA is defined and the array index is greater than or equal to
+// ARRAY_SIZE set arrayIndex back to zero and replay the data.
+  if (arrayIndex >= ARRAY_SIZE) { 
+    arrayIndex = 0;               
+  }
+#endif
 
   if (arrayIndex < ARRAY_SIZE) {
 
