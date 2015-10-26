@@ -20,6 +20,9 @@
                         // the device is connected and reconnects if not.
 
 #define USE_STATIC_IP_ADDRESSES // Comment this out to use dynamic IP addresses.
+
+#define USE_THREADED_EXECUTION  // Run the system and user processes as their 
+                                //own thread.  
                                 
 //******************************************************************************
 
@@ -39,6 +42,10 @@
 #include "wsd_defines.h"          // Defines common to all programs.
 #include "wsd_sensor.h"           // Define for sensor device ID
 //#include "wind_sensor.h"
+
+#ifdef USE_THREADED_EXECUTION
+  SYSTEM_THREAD(ENABLED);           // enable threaded execution.
+#endif
 
 const int OutPin = A0;            // wind sensor analog pin  hooked up to Wind P sensor "OUT" pin
 const int TempPin = A2;           // temp sesnsor analog pin hooked up to Wind P sensor "TMP" pin
