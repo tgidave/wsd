@@ -67,12 +67,10 @@ else
    
    wsd_sensor_S00.bin: wsd_sensor.ino ../include/wsd_sensor_S00.h $(INCLUDES) $(LIBS)
 		cp ../include/wsd_sensor_S00.h wsd_sensor.h
-		cat wsd_sensor.h
 		particle compile p $< wsd_sensor.h $(INCLUDES) $(LIBS) --saveto $@
     
    wsd_sensor_S01.bin: wsd_sensor.ino ../include/wsd_sensor_S01.h $(INCLUDES) $(LIBS)
 		cp ../include/wsd_sensor_S01.h wsd_sensor.h
-		cat wsd_sensor.h
 		particle compile p $< wsd_sensor.h $(INCLUDES) $(LIBS) --saveto $@
     
    wsd_sensor_S02.bin: wsd_sensor.ino ../include/wsd_sensor_S02.h $(INCLUDES) $(LIBS)

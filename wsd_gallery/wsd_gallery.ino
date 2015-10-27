@@ -21,7 +21,7 @@
 #include "wsd_defines.h"
 #include "wsd_sensor.h"
 
-#define SERVO_UPDATE_LIMIT -1 // If the wind speed is equal to or less than this
+#define SERVO_UPDATE_LIMIT 3  // If the wind speed is equal to or less than this
                               // value the servo direction is not updated.  A value 
                               // of -1 should always update the servo direction.
 
@@ -185,7 +185,7 @@ void loop() {
 
   if (arrayIndex < ARRAY_SIZE) {
 
-    speedMap = map(windSpeed[arrayIndex], 0, 50, 0, 255);
+    speedMap = map(windSpeed[arrayIndex], 0, 12, 65, 255);
     direction = calcDirMovingAverage(compassHeading[arrayIndex]); 
 
     if (speedMap > SERVO_UPDATE_LIMIT) {  // If the wind speed is above the servo
