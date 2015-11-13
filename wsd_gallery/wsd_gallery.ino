@@ -25,6 +25,23 @@
                               // value the servo direction is not updated.  A value 
                               // of -1 should always update the servo direction.
 
+//#define ADD_FLICKER           // Comment out this like to stop flickering.
+
+#ifdef ADD_FLICKER
+  #define FLICKER_ON_TIME 50  // This should probably not go above 1/2 the mSECOND_DELAY
+  #define FLICKER_OFF_TIME 20 // This should probably not go above 1/2 the mSECOND_DELAY
+
+  #define RANDOMIZE_FLICKER   // Comment out this line to remove randomness from the flicker.
+      
+  #ifdef RANDOMIZE_FLICKER    
+    #define RANDOM_FLICKER_LIMIT_LOW  -10 //the absolute value of this should not go above 1/2 the lessor of FLICKER_ON_TIME and FLICKER_OFF_TIME
+                                          // and should be less than RANDOM_FLICKER_LIMIT_HIGH
+                                          
+    #define RANDOM_FLICKER_LIMIT_HIGH 11  //the absolute value of this should not go above 1/2 the lessor of FLICKER_ON_TIME and FLICKER_OFF_TIME 
+                                          // and should be greater than RANDOM_FLICKER_LIMIT_LOW  
+  #endif    
+#endif
+
 const int ledPin1 =  A5;
 const int ledPin2 =  A4; // the number of the LED pin driver
 
@@ -37,6 +54,8 @@ int arrayIndex = ARRAY_SIZE;
 short dmaRing[DMA_RING_SIZE];
   
 int dmaRingIndex;  
+
+int activeLED = ledPin1;
 
 Servo myservo0; // create servo object to control servo 0
 Servo myservo1; // create servo object to control servo 1
@@ -140,6 +159,11 @@ void setup() {
   myservo0.attach(D0);  // attaches the servo on pin D0 to the servo object
   myservo1.attach(D1);  // attaches the servo on pin D1 to the servo object
 
+  for (i = 0; i < ARRAY_SIZE; ++i) {
+    windSpeed[ARRAY_SIZE] = 0;
+    compassHeading[ARRAY_SIZE] = 0;
+  }
+
   for (i = 0; i < DMA_RING_SIZE; ++i) {
     dmaRing[i] = 0;
   }
@@ -175,6 +199,16 @@ void loop() {
 
   int delayTime = mSECOND_DELAY;
 
+#ifdef ADD_FLICKER
+  int flickerOnTime = FLICKER_ON_TIME;
+
+  int flickerOffTime = FLICKER_OFF_TIME;
+
+  bool flickerState = false;
+
+  int randomFlicker;
+#endif
+
 #ifdef REPLAY_OLD_DATA
 // If REPLAY_OLD_DATA is defined and the array index is greater than or equal to
 // ARRAY_SIZE set arrayIndex back to zero and replay the data.
@@ -185,61 +219,83 @@ void loop() {
 
   if (arrayIndex < ARRAY_SIZE) {
 
-    speedMap = map(windSpeed[arrayIndex], 0, 12, 65, 255);
+    speedMap = map(windSpeed[arrayIndex], 0, 12, 20, 255);
     direction = calcDirMovingAverage(compassHeading[arrayIndex]); 
 
     if (speedMap > SERVO_UPDATE_LIMIT) {  // If the wind speed is above the servo
                                           // update limit, update the servo direction.
-      delayTime -= SERVO_DELAY;    // we know we are going to delay 50ms so adjust for it.
 
       if (direction >= 0 && direction <= 90) {
-      analogWrite(ledPin2, 0);
-      directionMap0 = map(direction, 0, 180, 0, 170);
-      myservo0.write(directionMap0);
-      delay(SERVO_DELAY);
-      analogWrite(ledPin1, speedMap);
-      myservo1.write(170);
-    }
-
-    else if (direction >= 91 && direction <= 180) {
-      analogWrite(ledPin2, 0);
-      directionMap0 = map(direction, 0, 180, 0, 170);
-      myservo0.write(directionMap0);
-      delay(SERVO_DELAY);
-      analogWrite(ledPin1, speedMap);
-      myservo1.write(0);
-    }
-
-    else if (direction >= 181 && direction <= 270) {
-      analogWrite(ledPin1, 0);
-      directionMap1 = map(direction, 181, 360, 0, 170);
-      myservo1.write(directionMap1);
-      delay(SERVO_DELAY);
-      analogWrite(ledPin2, speedMap);
-      myservo0.write(170);
-    }
-
-    else {
-      analogWrite(ledPin1, 0);
-      directionMap1 = map(direction, 181, 360, 0, 170);
-      myservo1.write(directionMap1);
-      delay(SERVO_DELAY);
-      analogWrite(ledPin2, speedMap);
-      myservo0.write(0);
+        analogWrite(ledPin2, 0);
+        directionMap0 = map(direction, 0, 180, 0, 170);
+        myservo0.write(directionMap0);
+        activeLED = ledPin1;
+        myservo1.write(170);
       }
-    }
 
-    else {  // The wind speed is below the SERVO_UPDATE_LIMIT.  Just set the light brightness.
-            // Since we don't know which LED was on last and the wind speed is very low just go 
-            // ahead and set both LEDs to the current value.  This is important only when the LED 
-            // was set very bright during the last loop.
-      analogWrite(ledPin1, speedMap);  
-      analogWrite(ledPin2, speedMap);
+      else if (direction >= 91 && direction <= 180) {
+        analogWrite(ledPin2, 0);
+        directionMap0 = map(direction, 0, 180, 0, 170);
+        myservo0.write(directionMap0);
+        activeLED = ledPin1;
+        myservo1.write(0);
+      }
+
+      else if (direction >= 181 && direction <= 270) {
+        analogWrite(ledPin1, 0);
+        directionMap1 = map(direction, 181, 360, 0, 170);
+        myservo1.write(directionMap1);
+        activeLED = ledPin2;
+        myservo0.write(170);
+      }
+
+      else {
+        analogWrite(ledPin1, 0);
+        directionMap1 = map(direction, 181, 360, 0, 170);
+        myservo1.write(directionMap1);
+        activeLED = ledPin2;
+        myservo0.write(0);
+      }
     }
 
     arrayIndex += 1;
   }
 
-  delay(delayTime);
+#ifdef ADD_FLICKER
+  while ( delayTime - flickerOnTime > 0) {
+
+    if (flickerState == false ) {
+      analogWrite(activeLED, speedMap);
+      flickerState = TRUE;
+      randomFlicker = flickerOnTime;
+
+#ifdef RANDOMIZE_FLICKER
+      randomFlicker += random( RANDOM_FLICKER_LIMIT_LOW, RANDOM_FLICKER_LIMIT_HIGH );
+#endif
+
+      delayTime -= randomFlicker;  
+      delay(randomFlicker);
+    }
+
+    else {
+      analogWrite(activeLED, 0);
+      flickerState = FALSE;
+      randomFlicker = flickerOffTime;
+
+#ifdef RANDOMIZE_FLICKER
+      randomFlicker += random( RANDOM_FLICKER_LIMIT_LOW, RANDOM_FLICKER_LIMIT_HIGH );
+#endif
+
+      delayTime -= randomFlicker;  
+      delay(randomFlicker);
+    }
+  }
+#else
+  analogWrite(activeLED, speedMap);
+#endif
+
+  if (delayTime > 0) {
+    delay(delayTime);
+  }
 }
 

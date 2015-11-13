@@ -10,14 +10,14 @@
 #define WSD_DEBUG_MAX             // Include more debugging information
                                   // MAX_DEBUG needs DEBUG to be on for it to work
 
-#define ARRAY_SIZE        10      // Size of both the wind direction and the wind speed arrays
+#define ARRAY_SIZE        20      // Size of both the wind direction and the wind speed arrays
 
 #define BUFF_SIZE         10      // Size of the intermediate results buffer for formatting
                                   // a single wind direction or wind speed value.  This buffer should
                                   // be able to hold the maximum value of an unsigned int (65535)
                                   // followed by a comma and then a NULL.
 
-#define TRANSBUFF_SIZE    141     // Size of the transmit buffer.  This buffer needs to hold ten wind
+#define TRANSBUFF_SIZE    256     // Size of the transmit buffer.  This buffer needs to hold ten wind
                                   // speed values and ten wind direction values separated by a comma
                                   // along with a terminating NULL.  The maximum size as currently
                                   // configures would be (7 * 20) + 1 for 141 characters.

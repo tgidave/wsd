@@ -16,14 +16,23 @@
 // change any of them, you compile and flash all servo devices.
 //*****************************************************************************
 
-#define CHECK_CONNECTED // Comment this out to remove code that checkes that 
+#define CHECK_CONNECTED // Comment this out to remove code that checks that 
                         // the device is connected and reconnects if not.
+
 
 #define USE_STATIC_IP_ADDRESSES // Comment this out to use dynamic IP addresses.
 
 #define USE_THREADED_EXECUTION  // Run the system and user processes as their 
                                 //own thread.  
-                                
+                   
+#ifdef USE_THREADED_EXECUTION   // The code the checks the magnetometer will only
+                                // work in threaded mode.
+
+//#define CHECK_MAG       // Comment this out to remove code that checks that
+                          // the magnetometer came up and flash the user LED
+                          // if it did not.
+#endif  // USE_THREADED_EXECUTION
+
 //******************************************************************************
 
 #include <stdio.h>
@@ -45,10 +54,15 @@
 
 #ifdef USE_THREADED_EXECUTION
   SYSTEM_THREAD(ENABLED);           // enable threaded execution.
-#endif
+#endif  // USE_THREADED_EXECUTION
 
 const int OutPin = A0;            // wind sensor analog pin  hooked up to Wind P sensor "OUT" pin
 const int TempPin = A2;           // temp sesnsor analog pin hooked up to Wind P sensor "TMP" pin
+
+int userLED = D7;                 // Instead of writing D7 over and over again, we'll write led2
+
+int magActive = false;
+int ledActive = false;
 
 short windSpeed[ARRAY_SIZE];
 
@@ -76,6 +90,8 @@ Adafruit_HMC5883_Unified mag = Adafruit_HMC5883_Unified(12345);
 
 void setup(void) {
 
+  pinMode(userLED, OUTPUT);
+
 #ifdef USE_STATIC_IP_ADDRESSES
 
   // set up a static IP address.
@@ -88,11 +104,11 @@ void setup(void) {
     // now let's use the configured IP
   WiFi.useStaticIP();
 
-#else
+#else // USE_STATIC_IP_ADDRESSES
 
   WiFi.useDynamicIP();
 
-#endif
+#endif  // USE_STATIC_IP_ADDRESSES
 
   // digital compass setup here - no additional setup commands for Rev P wind sensor:
   Serial.begin(9600);
@@ -103,6 +119,8 @@ void setup(void) {
     Serial.println("Ooops, no HMC5883 detected ... Check your wiring!");
     while (1);
   }
+
+  magActive = true;
 }
 
 /* Assign a unique ID to this sensor at the same time */
@@ -283,11 +301,33 @@ void formatAndPublishData(void) {
 void loop(void) {
   //begin Rev C wind sensor declarations here:
 
+#ifdef CHECK_MAG
+  if (magActive == false) {
+
+    if (ledActive) {
+      digitalWrite(userLED, LOW);
+      ledActive = false;
+    }
+
+    else {
+      digitalWrite(userLED, HIGH);
+      ledActive = true;
+    }
+    
+    delay(500);
+    return;
+  }
+
+  else {
+    digitalWrite(userLED, LOW);
+  }
+#endif  // CHECK_MAG
+
 #ifdef CHECK_CONNECTED
   if (!Particle.connected()) {
       Particle.connect();
   }
-#endif
+#endif  //CHECK_CONNECTED
 
   windSpeed[arrayIndex] = getWindSpeed();
   compassHeading[arrayIndex] = getWindHeading();
