@@ -28,6 +28,7 @@
 //#define ADD_FLICKER           // Comment out this like to stop flickering.
 
 #ifdef ADD_FLICKER
+  
   #define FLICKER_ON_TIME 50  // This should probably not go above 1/2 the mSECOND_DELAY
   #define FLICKER_OFF_TIME 20 // This should probably not go above 1/2 the mSECOND_DELAY
 
@@ -42,8 +43,27 @@
   #endif    
 #endif
 
+#define LOWSPEED_FLICKER
+
+#ifdef LOWSPEED_FLICKER
+  #define LOWSPEED_FLICKER_LIMIT 100 
+  #define LOWSPEED_FLICKER_ON_TIME  25
+  #define LOWSPEED_FLICKER_OFF_TIME 975
+
+  #define RANDOMIZE_LOWSPEED_FLICKER
+
+  #ifdef RANDOMIZE_LOWSPEED_FLICKER
+    #define LOWSPEED_FLICKER_RAND_LOW_LIMIT   -15
+    #define LOWSPEED_FLICKER_RAND_HIGH_LIMIT  16
+  #endif
+#endif
+
 const int ledPin1 =  A5;
 const int ledPin2 =  A4; // the number of the LED pin driver
+
+int userLED = D7;                 
+
+int userLEDState = false;
 
 short windSpeed[ARRAY_SIZE];
 
@@ -57,8 +77,21 @@ int dmaRingIndex;
 
 int activeLED = ledPin1;
 
+int lowSpeedFlickerOnTime;
+int lowSpeedFlickerOffTime;
+
 Servo myservo0; // create servo object to control servo 0
 Servo myservo1; // create servo object to control servo 1
+
+void FlipUserLED(void) {
+  if (userLEDState == false) {
+    userLEDState = true;
+    digitalWrite(userLED, HIGH);
+  } else {
+    userLEDState = false;
+    digitalWrite(userLED, LOW);
+  }
+}
 
 int incrementDmaRingIndex(int indexIn) {
 
@@ -152,6 +185,10 @@ void setup() {
 
   Particle.subscribe(SENSOR_NBR, speedrProcess);
 
+  pinMode(userLED, OUTPUT);
+  userLEDState = false;
+  digitalWrite(userLED, LOW);
+
   // begin light event setup here:
   pinMode(ledPin1, OUTPUT);
   pinMode(ledPin2, OUTPUT);
@@ -169,6 +206,10 @@ void setup() {
   }
 
   dmaRingIndex = 0;
+
+#ifdef LOWSPEED_FLICKER
+  lowSpeedFlickerOnTime = lowSpeedFlickerOffTime = 0;
+#endif
 }
 
 //***************************************************************************** 
@@ -207,6 +248,10 @@ void loop() {
   bool flickerState = false;
 
   int randomFlicker;
+#endif
+
+#ifdef LOWSPEED_FLICKER
+  int lsfDelayTime;
 #endif
 
 #ifdef REPLAY_OLD_DATA
@@ -260,6 +305,59 @@ void loop() {
 
     arrayIndex += 1;
   }
+
+#ifdef LOWSPEED_FLICKER
+  if (speedMap <= LOWSPEED_FLICKER_LIMIT) {
+
+    if ((lowSpeedFlickerOnTime == 0) && 
+        (lowSpeedFlickerOffTime == 0)) {
+      lowSpeedFlickerOnTime = LOWSPEED_FLICKER_ON_TIME;
+      lowSpeedFlickerOffTime = LOWSPEED_FLICKER_OFF_TIME;
+#ifdef RANDOMIZE_LOWSPEED_FLICKER
+      lowSpeedFlickerOnTime += random( LOWSPEED_FLICKER_RAND_LOW_LIMIT, LOWSPEED_FLICKER_RAND_HIGH_LIMIT );
+#endif
+    }
+
+    while (delayTime > 0) {
+
+      if (lowSpeedFlickerOnTime != 0) {
+        analogWrite(activeLED, speedMap);
+
+        if (delayTime <= lowSpeedFlickerOnTime ) {
+          FlipUserLED();
+          lowSpeedFlickerOnTime -= delayTime;
+          lsfDelayTime = delayTime;
+          delayTime = 0;
+
+        } else {
+          lsfDelayTime = lowSpeedFlickerOnTime;
+          delayTime -= lowSpeedFlickerOnTime;
+          lowSpeedFlickerOnTime = 0;
+        }
+
+      } else if (lowSpeedFlickerOffTime != 0 ) {
+        analogWrite(activeLED, 0);
+
+        if (delayTime <= lowSpeedFlickerOffTime ) {
+          lowSpeedFlickerOffTime -= delayTime;
+          lsfDelayTime = delayTime;
+          delayTime = 0;
+
+        } else { 
+          lsfDelayTime = lowSpeedFlickerOffTime;
+          delayTime -= lowSpeedFlickerOffTime;
+          lowSpeedFlickerOnTime = 0;
+
+        }
+      }
+
+      delay(lsfDelayTime);
+    }
+    return;
+  }
+
+  lowSpeedFlickerOnTime = lowSpeedFlickerOffTime = 0;
+#endif
 
 #ifdef ADD_FLICKER
   while ( delayTime - flickerOnTime > 0) {

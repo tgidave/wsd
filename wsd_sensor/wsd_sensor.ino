@@ -59,8 +59,8 @@
 const int OutPin = A0;            // wind sensor analog pin  hooked up to Wind P sensor "OUT" pin
 const int TempPin = A2;           // temp sesnsor analog pin hooked up to Wind P sensor "TMP" pin
 
-int userLED = D7;                 // Instead of writing D7 over and over again, we'll write led2
-
+int userLED = D7;    
+             
 int magActive = false;
 int ledActive = false;
 
